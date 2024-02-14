@@ -1,0 +1,44 @@
+server:
+  port: 8282
+
+spring:
+  datasource:
+    hikari:
+      driver-class-name: org.mariadb.jdbc.Driver
+      jdbc-url: jdbc:mariadb://localhost:3309/stockdb?&serverTimezone=Asia/Seoul&autoReconnect=true&allowMultiQueries=true&characterEncoding=UTF-8
+      username: root
+      password: ntflow
+      mapper-locations: classpath:mapper/**/*Mapper.xml
+
+  # 정적 파일 변경 실시간 반영
+  devtools:
+    restart:
+      enabled: 'false'
+    livereload:
+      enabled: 'true'
+
+  thymeleaf:
+    prefix: classpath:templates/
+    suffix: .html
+    check-template-location: true
+    cache: false
+
+  # JPA 설정
+  jpa:
+#    database: mariadb
+    database-platform: org.hibernate.dialect.MariaDB103Dialect
+    generate-ddl: 'false'
+    show-sql: 'true'
+    open-in-view: 'false'
+    hibernate:
+      ddl-auto: update
+    properties:
+      hibernate:
+        format_sql: 'true'
+        use_sql_comments: 'true'
+        default_batch_fetch_size: '100'
+#  jpa:
+#    show-sql: true
+#    hibernate:
+#      ddl-auto: none
+#    open-in-view: false

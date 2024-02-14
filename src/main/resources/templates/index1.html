@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<div class="table-responsive">
+    <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+        <thead>
+        <tr>
+            <th>아이디</th>
+            <th>이름</th>
+            <th>카드번호</th>
+            <th>사용금액</th>
+            <th>사용처코드</th>
+        </tr>
+        </thead>
+        <tfoot>
+        <tr>
+            <th>아이디</th>
+            <th>이름</th>
+            <th>카드번호</th>
+            <th>사용금액</th>
+            <th>사용처코드</th>
+        </tr>
+        </tfoot>
+        <!-- <tbody></tbody> -->
+    </table>
+</div>
+</div>
+</body>
+<script>
+    $(document).ready(function() {
+    tables.showData();
+});
+
+var tables = {
+    draw : 0,
+    dataSets : [],
+    render : function() {
+        $('#dataTable').DataTable({
+            data: tables.dataSets,
+            columns: [
+                {
+                    data: 'id'
+                },
+                {
+                    data: 'name'
+                },
+                {
+                    data: 'cardNumber'
+                },
+                {
+                    data: 'price'
+                },
+                {
+                    data: 'placeCode'
+                }
+            ]
+        });
+    },
+    showData : function(){
+        dataSets = [];
+        $.ajax({
+            type : 'GET',
+            url : 'card-use-info',
+            contentType: 'application/json',
+            //dataType 정의
+            dataType: 'json',
+            //요청결과가 성공일 경우
+            success : function(data) {
+                //console.log(data);
+                $.each(data, function(index,obj){
+                    tables.dataSets.push(obj);
+                });
+                tables.render();
+            },
+            //요청결과가 실패일 경우
+            error : function(xhr, status, error){
+            }
+        });
+    }
+};
+</script>
+</html>
